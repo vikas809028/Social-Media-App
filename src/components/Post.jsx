@@ -1,16 +1,42 @@
-const Post = () => {
+/* eslint-disable react/prop-types */
+import styles from "./Post.module.css";
+import { MdDelete } from "react-icons/md";
+import { AiTwotoneLike } from "react-icons/ai";
+import { useContext } from "react";
+import { PostList } from "../store/post-list-store";
+const Post = ({ post }) => {
+  const { deletePost } = useContext(PostList);
+
   return (
     <>
-      <div className="card" style={{ width: "18rem" }}>
+      <div className={`card ${styles.postcard}`}>
         <div className="card-body">
-          <h5 className="card-title">Card title</h5>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card content.
-          </p>
-          <a href="#" className="btn btn-primary">
-            Go somewhere
-          </a>
+          <h5 className="card-title">
+            {post.title}
+            <span
+              className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              onClick={() => deletePost(post.id)}
+            >
+              <MdDelete />
+            </span>
+          </h5>
+          <p className="card-text">{post.body}</p>
+          {post.tags.map((hashtags) => (
+            <span
+              key={hashtags}
+              className={`badge rounded-full fs-6 text-bg-primary ${styles.hashTag}`}
+            >
+              {hashtags}
+            </span>
+          ))}
+
+          <div
+            className={`alert alert-success ${styles.likeContainer}`}
+            role="alert"
+          >
+            <AiTwotoneLike className={styles.likeIcon}></AiTwotoneLike>This Post
+            is liked by {post.reactions} people.
+          </div>
         </div>
       </div>
     </>
