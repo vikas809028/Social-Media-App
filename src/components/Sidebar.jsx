@@ -10,10 +10,9 @@ const Sidebar = ({ selectedTab, setSelectedTab }) => {
   return (
     <>
       <div
-        className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
-        style={{ width: "20vw", height: "100vh" }}
+        className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark position-fixed left-0"
+        style={{ width: "20vw", height: "100vh", top: "70px" }}
       >
-        <p className="fs-3 mx-auto fw-600">Social Media</p>
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
             <a

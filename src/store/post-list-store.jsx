@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 //all components inside postList Provider can use value of this context
 export const PostList = createContext({
@@ -23,10 +22,7 @@ const PostListReducer = (currPostList, action) => {
 };
 
 const PostListProvider = ({ children }) => {
-  const [postList, dispatchPostList] = useReducer(
-    PostListReducer,
-    DEFAULT_POST_LIST
-  );
+  const [postList, dispatchPostList] = useReducer(PostListReducer, []);
 
   // const addPost = (post) => {
   //   dispatchPostList({
@@ -64,46 +60,28 @@ const PostListProvider = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    fetch("https://dummyjson.com/posts", { signal })
+      .then((res) => res.json())
+      .then((data) => {
+        addInitailPosts(data.posts);
+      });
+
+    return () => {
+      //controller.abort();
+    };
+  }, []);
+
   // context me postList ,addPost and deletePost hai but addPost maine reducer se liya hai
   return (
-    <PostList.Provider value={{ postList, addPost, deletePost }}>
+    <PostList.Provider
+      value={{ postList, addPost, deletePost, addInitailPosts }}
+    >
       {children}
     </PostList.Provider>
   );
 };
-const DEFAULT_POST_LIST = [
-  {
-    id: "1",
-    title: "Go to Hell",
-    body: "Hii I am A software Engineer Hii I am A software Engineer Hii I am A software EngineerHii I am A software Engineer",
-    reactions: 0,
-    userId: "user-9",
-    tags: ["engineer", "cse"],
-  },
-  {
-    id: "2",
-    title: "Go to Hell",
-    body: "Hii I am A software Engineer Hii I am A software Engineer Hii I am A software Engineer Hii I am A software EngineerHii I am A software Engineer",
-    reactions: 0,
-    userId: "user-12",
-    tags: ["engineer", "cse"],
-  },
-];
 
 export default PostListProvider;
-
-// useEffect(() => {
-//   setFetching(true);
-//   const controller = new AbortController();
-//   const signal = controller.signal;
-//   fetch("https://dummyjson.com/posts", { signal })
-//     .then((res) => res.json())
-//     .then((data) => {
-//       addInitailPosts(data.posts);
-//       setFetching(false);
-//     });
-
-//   return () => {
-//     controller.abort();
-//   };
-// }, []);
