@@ -1,8 +1,11 @@
-# React + Vite
+# Social Media App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. Clone repository using the follwing Command
 
-Currently, two official plugins are available:
+```
+ git clone https://github.com/vikas809028/Social-Media-App.git
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Install depencies using `npm install ` command
+
+3.Use `npm run dev ` to run the application
